@@ -68,12 +68,12 @@ def minimize(costFunc, x0, bounds, num_particles, maxiter):
     plot.rc('font', **plot_config_font)
     figure = plot.figure()
     figure.canvas.set_window_title('Swarm particle algorithm 2D-View')
-    ax = figure.add_subplot(111)
-    ax.grid(True)
 
     i = 0
     while i < maxiter:
-        print(f'iter: {i:>4d}, best solution: {error_g_best:10.6f}')
+        print(f'iteration: {i:>4d}, best solution: {error_g_best:10.6f}')
+
+        plot.cla()
 
         for j in range(0, num_particles):
             swarm[j].evaluate(costFunc)
@@ -84,17 +84,15 @@ def minimize(costFunc, x0, bounds, num_particles, maxiter):
         for j in range(0, num_particles):
             swarm[j].update_velocity(position_g_best)
             swarm[j].update_position(bounds)
-            line1 = ax.plot(swarm[j].position_i[0], swarm[j].position_i[1], 'r+', c=(plot_colors.to_rgba("grey", alpha=0.75)))
-            line2 = ax.plot(position_g_best[0], position_g_best[1], 'g*', c=(plot_colors.to_rgba("orange", alpha=1.0)))
+            line1 = plot.plot(swarm[j].position_i[0], swarm[j].position_i[1], 'r+', c=(plot_colors.to_rgba("grey", alpha=0.75)))
+            line2 = plot.plot(position_g_best[0], position_g_best[1], 'g*', c=(plot_colors.to_rgba("orange", alpha=1.0)))
 
-        ax.plot([triangle_a[0], triangle_b[0]], [triangle_a[1], triangle_b[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
-        ax.plot([triangle_b[0], triangle_c[0]], [triangle_b[1], triangle_c[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
-        ax.plot([triangle_c[0], triangle_a[0]], [triangle_c[1], triangle_a[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
-        ax.set_xlim(-10, 10)
-        ax.set_ylim(-10, 10)
-        figure.canvas.draw()
-        ax.clear()
-        ax.grid(True)
+        plot.plot([triangle_a[0], triangle_b[0]], [triangle_a[1], triangle_b[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
+        plot.plot([triangle_b[0], triangle_c[0]], [triangle_b[1], triangle_c[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
+        plot.plot([triangle_c[0], triangle_a[0]], [triangle_c[1], triangle_a[1]], c=(plot_colors.to_rgba("blue", alpha=0.35)))
+        plot.xlim(-10, 10)
+        plot.ylim(-10, 10)
+        plot.pause(0.02)
 
         i += 1
 
