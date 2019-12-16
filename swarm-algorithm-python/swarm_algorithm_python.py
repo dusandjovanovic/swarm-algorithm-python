@@ -1,7 +1,7 @@
-
 from __future__ import division
 from random import random
 from random import uniform
+from matplotlib import pyplot
 
 w_inertia = 0.5    # tendency towards previous velocity
 c_cognitive = 1    # cognitive constant
@@ -21,7 +21,6 @@ class Particle:
 
     def evaluate(self, costFunc):
         self.error_i = costFunc(self.position_i)
-
         if self.error_i < self.error_i_best or self.error_i_best == -1:
             self.position_i_best = self.position_i.copy()
             self.error_i_best = self.error_i
@@ -29,7 +28,6 @@ class Particle:
     def update_position(self, bounds):
         for i in range(0, num_dimensions):
             self.position_i[i] = self.position_i[i] + self.velocity_i[i]
-
             if self.position_i[i] > bounds[i][1]:
                 self.position_i[i] = bounds[i][1]
             if self.position_i[i] < bounds[i][0]:
@@ -59,6 +57,11 @@ def minimize(costFunc, x0, bounds, num_particles, maxiter):
     for i in range(0, num_particles):
         swarm.append(Particle(x0))
 
+    pyplot.ion()
+    fig = pyplot.figure()
+    ax = fig.add_subplot(111)
+    ax.grid(True)
+
     i = 0
     while i < maxiter:
         print(f'iter: {i:>4d}, best solution: {error_g_best:10.6f}')
@@ -72,13 +75,22 @@ def minimize(costFunc, x0, bounds, num_particles, maxiter):
         for j in range(0, num_particles):
             swarm[j].update_velocity(position_g_best)
             swarm[j].update_position(bounds)
+            line1 = ax.plot(swarm[j].position_i[0], swarm[j].position_i[1], 'r+')
+            line2 = ax.plot(position_g_best[0], position_g_best[1], 'g*')
+
+        ax.set_xlim(-10, 10)
+        ax.set_ylim(-10, 10)
+        fig.canvas.draw()
+        ax.clear()
+        ax.grid(True)
+
         i += 1
 
     print(f'\nBest-global position > {position_g_best}')
     print(f'Best-error > {error_g_best}\n')
 
 def main():
-    initial_location = [5, 5]
+    initial_location = [random() * 10, random() * 10]
     bounds = [(-10,10), (-10,10)]
 
     minimize(sphere, initial_location, bounds, num_particles=15, maxiter=30)
