@@ -15,11 +15,6 @@ num_iterations = 25
 plot_config_toolbar = "None"
 plot_config_font = {'family': 'DejaVu Sans', 'weight': 'bold', 'size': 7}
 
-triangle_a = [-8, -2]
-triangle_b = [3, -1]
-triangle_c = [0, 3]
-triangle_centroid = [0, 0]
-
 class Particle:
     def __init__(self, x0):
         self.velocity_i = []
@@ -108,6 +103,27 @@ def minimize(costFunc, x0, bounds, num_particles, maxiter):
 
 def main():
     global triangle_centroid, triangle_a, triangle_b, triangle_c
+    try:
+        print("Input triangle A-point(x, y), each number in new line.")
+        x = float(input())
+        y = float(input())
+        triangle_a = [x, y]
+
+        print("Input triangle B-point(x, y), each number in new line.")
+        x = float(input())
+        y = float(input())
+        triangle_b = [x, y]
+
+        print("Input triangle C-point(x, y), each number in new line.")
+        x = float(input())
+        y = float(input())
+        triangle_c = [x, y]
+    except:
+        triangle_a = [-6, -2]
+        triangle_b = [3, -1]
+        triangle_c = [0, 3]
+        print("Wrong input! Defaults are loaded.")
+
     triangle_centroid = [(triangle_a[0] + triangle_b[0] + triangle_c[0]) / 3, (triangle_a[1] + triangle_b[1] + triangle_c[1]) / 3]
     initial_location = [random() * 10, random() * 10]
     bounds = [(-20,20), (-20,20)]
