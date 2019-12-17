@@ -1,7 +1,7 @@
 # Implementacija Swarm algoritma u programskom jeziku Python
 
 **1. Predlog problema:**
-Vodjenje čestica ka unutrašnjosti trougla u 2d prostoru, očekuje se da posle odredjenog broja iteracija sve čestice budu unutar granica proizvoljnog trougla. Tačka ka kojoj se teži je **centralna tačka trougla** iliti *"triangle centroid"*. Unose se koordinate tri tačke koje će činiti trougao, sa druge strane, sve čestice dobijaju nasumično mesto na početku algoritma. Zadatak se sastoji u napredovanju čestica kroz prostor sve do unutrašnjosti trougla i ciljane tačke.
+Vodjenje čestica ka unutrašnjosti trougla u 2d prostoru, očekuje se da posle odredjenog broja iteracija sve čestice budu unutar granica proizvoljnog trougla. Tačka kojoj se teži je **centralna tačka trougla** iliti *"triangle centroid"*. Unose se koordinate tri tačke koje će činiti trougao, sa druge strane, sve čestice dobijaju nasumično mesto na početku algoritma. Zadatak se sastoji u napredovanju čestica kroz prostor sve do unutrašnjosti trougla i krajnje tačke.
 
 **2. Problem za primenu Swarm algoritma:**
 Osnovni problem je u činjenici da se postavljeni zadatak velikim centralizovanim sistemom ne može rešiti na lak način. Swarm sistem koji se bazira na prostim pravilima svake čestice bez centralizovane kontrole je jako pogodan za ovakvu postavku problema. Čestice imitiraju ponašanje insekata i interaguju medjusobno (uče jedne od drugih) pa se samim tim postepeno približavaju cilju.
@@ -11,7 +11,7 @@ Ovaj algoritam ne garantuje nalaženje globalnog minimuma (minimalna mera grešk
 **3. Implementacija Swarm algoritma:**
 Za implementaciju algoritma koriste se samo osnovne biblioteke Python okruženja. S obzirom na složenost problema nije neophodno koristiti open-source biblioteke. Predstavljanje čestica, kao i sve funkcije mere grešaka i učenja izgradjene su od osnovnih biblioteka što dozvoljava veću fleksibilnost.
 
-Osnovni pregled: k-ta iteracija algortima, k+1 je sledeća iteracija:
+Osnovni pregled: **k-ta iteracija** algortima, **k+1** je sledeća iteracija:
 
 *x^i(k+1) = x^i(k) + v^i(k) + 1*
 
@@ -23,12 +23,12 @@ Brzina čestice (velocity):
 3. **p^i(k)** - najbolja individualna pozicija čestice
 4. **p^g(k)** - najbolja globalna pozicija od svih čestica swarm-a
 5. **c(1), c(2)** - kognitivni i socijalni parametri
-5. **w(1), w(2)** - nasumične vrednosti napredovanja
+5. **w(1), w(2)** - nasumične vrednosti
 
-Iz jednačine brzine se mogu primetiti dva člana: **socijalni član i kognitivni član**. Socijalni se oslanja na najbolju globalnu poziciju, dok se kognitivni računa na osnovu najbolje individualne pozicije.
+Iz jednačine brzine mogu se primetiti dva člana: **socijalni član i kognitivni član**. Socijalni se oslanja na najbolju globalnu poziciju, dok se kognitivni računa na osnovu najbolje individualne pozicije.
 
 **3.1. Parametri Swarm algoritma:**
-Svi ulazni argumenti algoritma su parametrizovani. Početak algoritma sastoji se od inicijalizacije svih vredosti, nasumičnog generisanja početnig koordinata svih čestica kao i njihovih parametara brzina.
+Svi ulazni argumenti algoritma su parametrizovani. Početak algoritma sastoji se od inicijalizacije svih vredosti, nasumičnog generisanja početnih koordinata svih čestica kao i njihovih parametara brzina.
 
 1. **w_inertia** - konstanta inercije, koliko uzimati u obzir prethodnu poziciju (0.5)
 2. **c_cognitive** - kognitivna konstanta, koliko uzimati u obzir najbolju individualnu poziciju (1)
@@ -40,13 +40,13 @@ Nakon inicjalizacija prelazi se na iteracije algoritma. Kroz svaku iteraciju se 
 
 Osnovni koncept se bazira na balansu izmedju prethodne pozicije čestice, udaljenosti od najbolje individualne pozicije (kognitivna sila) i udaljenosti od najbolje globalne pozicije (socijalna sila).
 
-Na slikama se može videti napredovanje algoritma. Polazni skup čestica je nasumično generisan i njihove koordinate imaju neodredjene varijacije u odnosu na jednu centralnu tačku prostora koja nije unutar trougla. Svakom iteracijom dobija se skup čestica koje napreduju ka trouglu, sve dok ne probiju nejgove granice i zadrže se unutar linija. Na kraju se očekuje skup čestica koje s unutar trougla i što je moguće više se poklapaju sa centrom težipta trougla. Mera kvaliteta čestice meri se njenom udaljenošću od ciljane tačke.
+Na slikama se može videti napredovanje algoritma. Polazni skup čestica je nasumično generisan i njihove koordinate imaju neodredjene varijacije u odnosu na jednu centralnu tačku prostora koja nije unutar trougla. Svakom iteracijom dobija se skup čestica koje napreduju ka trouglu, sve dok ne probiju nejgove granice i zadrže se unutar linija. Na kraju se očekuje skup čestica koje su unutar trougla i što je moguće više se poklapaju sa centrom težišta trougla. Mera kvaliteta čestice meri se razdaljinom od ciljane tačke.
  
 ![alt text][screenshot_algotithm_start]
 
 [screenshot_algotithm_start]: metadata/algorithm-start.jpg
 
-U konzolnom prozoru se nakon svake iteracije prikazuje stepen greške najboljeg rešenja, odnosno najkvalitetnije čestice. Na kraju algoritma može se videti globalna pozicija najbolje čestice u 2d prostoru kao i njen stepen greške.
+U konzolnom prozoru se nakon svake iteracije prikazuje stepen greške najboljeg rešenja, odnosno najkvalitetnije čestice. Na kraju algoritma može se videti globalna pozicija najbolje čestice u 2d-prostoru kao i njen stepen greške.
 
 ![alt text][screenshot_algotithm_mid1]
 
