@@ -29,6 +29,7 @@ class Particle:
 
     def evaluate(self, costFunc):
         self.error_i = costFunc(self.position_i)
+
         if self.error_i < self.error_i_best or self.error_i_best == -1:
             self.position_i_best = self.position_i.copy()
             self.error_i_best = self.error_i
@@ -36,8 +37,10 @@ class Particle:
     def update_position(self, bounds):
         for i in range(0, num_dimensions):
             self.position_i[i] = self.position_i[i] + self.velocity_i[i]
+
             if self.position_i[i] > bounds[i][1]:
                 self.position_i[i] = bounds[i][1]
+
             if self.position_i[i] < bounds[i][0]:
                 self.position[i] = bounds[i][0]
 
@@ -52,7 +55,7 @@ def cost_function(x):
     distance_to_goal = numpy.sqrt((triangle_centroid[0] - x[0]) ** 2 + (triangle_centroid[1] - x[1]) ** 2)
     return distance_to_goal
 
-def minimize(costFunc, x0, bounds, num_particles, maxiter):
+def particle_swarm(costFunc, x0, bounds, num_particles, maxiter):
     global num_dimensions
     num_dimensions = len(x0)
     
@@ -126,7 +129,7 @@ def main():
     initial_location = [random() * 10, random() * 10]
     bounds = [(-20,20), (-20,20)]
 
-    minimize(cost_function, initial_location, bounds, num_particles, num_iterations)
+    particle_swarm(cost_function, initial_location, bounds, num_particles, num_iterations)
   
 if __name__== "__main__":
     main()
