@@ -126,9 +126,9 @@ def update_velocity(self, position_g_best):
 ```
 
 
-### Mera cene/greške i metoda `cost_function`
+### Mera greške i metoda `cost_function`
 
-Ova pomoćna metoda je neophodna u svakoj iteraciji i uzima u obzir trenutne (x, y) koordinate čestice. `triangle_centroid` su koordinate centra trougla (formirane prethodno).
+Ova pomoćna metoda je neophodna u svakoj iteraciji i uzima u obzir trenutne (x, y) koordinate čestice. `triangle_centroid` su koordinate centra trougla (formirane prethodno). Potrebno je na osnovu udaljenosti čestice od ciljne tačke formirati procenu cene, odnosno meru greške. Manje vrednosti se očekivano smatraju boljim.
 
 ```python
 def cost_function(x):
